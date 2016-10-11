@@ -70,7 +70,7 @@ class StockController extends Controller
      * @param Request $request
      * @param Stock $stock
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     * @Route("edit/{id}", name="appbundle_dashboard_stock_edit")
+     * @Route("/edit/{id}", name="appbundle_dashboard_stock_edit")
      */
     public function editStockAction(Request $request, Stock $stock)
     {
