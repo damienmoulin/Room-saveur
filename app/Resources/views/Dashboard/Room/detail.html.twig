@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <ul>
+        <li>ID : {{ room.id }}</li>
+        <li>Adresse : {{ room.address }}</li>
+        <li>Ville : {{ room.city }}</li>
+        <li>Code postal : {{ room.postalCode }}</li>
+        <li>Complément d'adresse : {{ room.addressComplement }}</li>
+    </ul>
+{% endblock %}
+{% block javascripts %}
+{% endblock %}
+{% block stylesheets %}
+
+{% endblock %}

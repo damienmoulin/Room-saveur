@@ -19,6 +19,19 @@ use Symfony\Component\HttpFoundation\Request;
 class RoomController extends Controller
 {
     /**
+     * @param Room $room
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/detail/{id}", name="appbundle_dashboard_room_detail")
+     */
+    public function detailRoomAction(Room $room)
+    {
+        return $this->render('Dashboard/Room/detail.html.twig',
+            [
+                'room' => $room
+            ]);
+    }
+
+    /**
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("", name="appbundle_dashboard_room")
      */
@@ -100,6 +113,5 @@ class RoomController extends Controller
 
         return $this->redirect($this->generateUrl('appbundle_dashboard_room'));
     }
-
 
 }
