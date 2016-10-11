@@ -14,8 +14,6 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * Music
- *
  * @ORM\Table(name="product")
  * @ORM\Entity()
  */
@@ -84,6 +82,13 @@ class Product
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Stock", mappedBy="product", cascade={"all"})
      */
     private $stocks;
+
+    /**
+     * @var ArrayCollection $likes
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Like", mappedBy="product", cascade={"all"})
+     */
+    private $likes;
 
     /**
      * Get id
@@ -261,5 +266,48 @@ class Product
     public function getFilename()
     {
         return $this->filename;
+    }
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->stocks = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add stock
+     *
+     * @param \AppBundle\Entity\Stock $stock
+     *
+     * @return Product
+     */
+    public function addStock(\AppBundle\Entity\Stock $stock)
+    {
+        $stock->setProduct($this);
+        $this->stocks->add($stock);
+
+        return $this;
+    }
+
+    /**
+     * Remove stock
+     *
+     * @param \AppBundle\Entity\Stock $stock
+     */
+    public function removeStock(\AppBundle\Entity\Stock $stock)
+    {
+        $this->stocks->removeElement($stock);
+    }
+
+    /**
+     * Get stocks
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getStocks()
+    {
+        return $this->stocks;
     }
 }

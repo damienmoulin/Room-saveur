@@ -14,8 +14,6 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * Music
- *
  * @ORM\Table(name="product")
  * @ORM\Entity()
  */
@@ -84,6 +82,13 @@ class Product
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Stock", mappedBy="product", cascade={"all"})
      */
     private $stocks;
+
+    /**
+     * @var ArrayCollection $likes
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Like", mappedBy="product", cascade={"all"})
+     */
+    private $likes;
 
     /**
      * Get id
@@ -269,6 +274,7 @@ class Product
     public function __construct()
     {
         $this->stocks = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->likes = new ArrayCollection();
     }
 
     /**
@@ -304,5 +310,40 @@ class Product
     public function getStocks()
     {
         return $this->stocks;
+    }
+
+    /**
+     * Add like
+     *
+     * @param \AppBundle\Entity\Like $like
+     *
+     * @return Product
+     */
+    public function addLike(\AppBundle\Entity\Like $like)
+    {
+        $like->setProduct($this);
+        $this->likes->add($like);
+
+        return $this;
+    }
+
+    /**
+     * Remove like
+     *
+     * @param \AppBundle\Entity\Like $like
+     */
+    public function removeLike(\AppBundle\Entity\Like $like)
+    {
+        $this->likes->removeElement($like);
+    }
+
+    /**
+     * Get likes
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getLikes()
+    {
+        return $this->likes;
     }
 }

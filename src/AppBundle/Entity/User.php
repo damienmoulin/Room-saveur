@@ -61,10 +61,18 @@ class User extends BaseUser
      */
     private $userAddress;
 
+    /**
+     * @var ArrayCollection $likes
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Like", mappedBy="user", cascade={"all"})
+     */
+    private $likes;
+
     public function __construct()
     {
         parent::__construct();
         $this->userAddress = new ArrayCollection();
+        $this->likes = new ArrayCollection();
     }
 
     /**
@@ -220,5 +228,40 @@ class User extends BaseUser
     public function getUserAddress()
     {
         return $this->userAddress;
+    }
+
+    /**
+     * Add like
+     *
+     * @param \AppBundle\Entity\Like $like
+     *
+     * @return User
+     */
+    public function addLike(\AppBundle\Entity\Like $like)
+    {
+        $like->setUser($this);
+        $this->likes->add($like);
+
+        return $this;
+    }
+
+    /**
+     * Remove like
+     *
+     * @param \AppBundle\Entity\Like $like
+     */
+    public function removeLike(\AppBundle\Entity\Like $like)
+    {
+        $this->likes->removeElement($like);
+    }
+
+    /**
+     * Get likes
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getLikes()
+    {
+        return $this->likes;
     }
 }
