@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <table>
+        <thead>
+            <tr>
+                <td>Id</td>
+                <td>Adresse</td>
+                <td>Ville</td>
+                <td>Code postal</td>
+                <td>Complement d'adresse</td>
+                <td><a href="{{ path('appbundle_dashboard_room_add') }}">Ajouter</a></td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for room in rooms %}
+                <tr>
+                    <td>{{ room.id }}</td>
+                    <td>{{ room.address }}</td>
+                    <td>{{ room.city }}</td>
+                    <td>{{ room.postalCode }}</td>
+                    <td>{{ room.addressComplement }}</td>
+                    <td><a href="{{ path('appbundle_dashboard_room_remove', {'id': room.id }) }}">Supprimer</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+{% block javascripts %}
+{% endblock %}
+{% block stylesheets %}
+{% endblock %}
