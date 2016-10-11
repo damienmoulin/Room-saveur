@@ -3,20 +3,18 @@
  * Created by PhpStorm.
  * User: damien
  * Date: 11/10/16
- * Time: 14:32
+ * Time: 19:37
  */
 
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
-
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="room")
+ * @ORM\Table(name="user_adress")
  */
-class Room
+class UserAddress
 {
     /**
      * @ORM\Id
@@ -50,11 +48,13 @@ class Room
     private $addressComplement;
 
     /**
-     * @var ArrayCollection $stocks
+     * @var $user
      *
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Stock", mappedBy="room", cascade={"all"})
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User" ,inversedBy="User")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
-    private $stocks;
+    private $user;
+
 
     /**
      * Get id
@@ -71,7 +71,7 @@ class Room
      *
      * @param string $address
      *
-     * @return Room
+     * @return UserAddress
      */
     public function setAddress($address)
     {
@@ -95,7 +95,7 @@ class Room
      *
      * @param string $city
      *
-     * @return Room
+     * @return UserAddress
      */
     public function setCity($city)
     {
@@ -119,7 +119,7 @@ class Room
      *
      * @param string $postalCode
      *
-     * @return Room
+     * @return UserAddress
      */
     public function setPostalCode($postalCode)
     {
@@ -143,7 +143,7 @@ class Room
      *
      * @param string $addressComplement
      *
-     * @return Room
+     * @return UserAddress
      */
     public function setAddressComplement($addressComplement)
     {
@@ -161,46 +161,28 @@ class Room
     {
         return $this->addressComplement;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->stocks = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
-     * Add stock
+     * Set user
      *
-     * @param \AppBundle\Entity\Stock $stock
+     * @param \AppBundle\Entity\User $user
      *
-     * @return Room
+     * @return UserAddress
      */
-    public function addStock(\AppBundle\Entity\Stock $stock)
+    public function setUser(\AppBundle\Entity\User $user = null)
     {
-        $stock->setRoom($this);
-        $this->stocks->add($stock);
+        $this->user = $user;
 
         return $this;
     }
 
     /**
-     * Remove stock
+     * Get user
      *
-     * @param \AppBundle\Entity\Stock $stock
+     * @return \AppBundle\Entity\User
      */
-    public function removeStock(\AppBundle\Entity\Stock $stock)
+    public function getUser()
     {
-        $this->stocks->removeElement($stock);
-    }
-
-    /**
-     * Get stocks
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getStocks()
-    {
-        return $this->stocks;
+        return $this->user;
     }
 }

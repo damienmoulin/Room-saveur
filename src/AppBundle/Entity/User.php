@@ -11,6 +11,7 @@ namespace AppBundle\Entity;
 
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity
@@ -53,9 +54,17 @@ class User extends BaseUser
      */
     private $userStatus;
 
+    /**
+     * @var ArrayCollection $userAddress
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\UserAddress", mappedBy="user", cascade={"all"})
+     */
+    private $userAddress;
+
     public function __construct()
     {
         parent::__construct();
+        $this->userAddress = new ArrayCollection();
     }
 
     /**
@@ -176,5 +185,40 @@ class User extends BaseUser
     public function getUserStatus()
     {
         return $this->userStatus;
+    }
+
+    /**
+     * Add userAddress
+     *
+     * @param \AppBundle\Entity\UserAddress $userAddress
+     *
+     * @return User
+     */
+    public function addUserAddress(\AppBundle\Entity\UserAddress $userAddress)
+    {
+        $userAddress->setUser($this);
+        $this->userAddress->add($userAddress);
+
+        return $this;
+    }
+
+    /**
+     * Remove userAddress
+     *
+     * @param \AppBundle\Entity\UserAddress $userAddress
+     */
+    public function removeUserAddress(\AppBundle\Entity\UserAddress $userAddress)
+    {
+        $this->userAddress->removeElement($userAddress);
+    }
+
+    /**
+     * Get userAddress
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUserAddress()
+    {
+        return $this->userAddress;
     }
 }

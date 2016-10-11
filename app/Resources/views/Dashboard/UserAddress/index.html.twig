@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <table>
+        <thead>
+        <tr>
+            <td>Id</td>
+            <td>Adresse</td>
+            <td>Ville</td>
+            <td>Code postal</td>
+            <td>Complement d'adresse</td>
+            <td><a href="{{ path('appbundle_dashboard_useraddress_add') }}">Ajouter</a></td>
+        </tr>
+        </thead>
+        <tbody>
+        {% for addresse in address %}
+            <tr>
+                <td>{{ addresse.id }}</td>
+                <td>{{ addresse.address }}</td>
+                <td>{{ addresse.city }}</td>
+                <td>{{ addresse.postalCode }}</td>
+                <td>{{ addresse.addressComplement }}</td>
+                <td>
+                    <a href="{{ path('appbundle_dashboard_useraddress_edit', {'id': addresse.id }) }}">Editer</a>
+                    <a href="{{ path('appbundle_dashboard_useraddress_remove', {'id': addresse.id }) }}">Supprimer</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+{% block javascripts %}
+{% endblock %}
+{% block stylesheets %}
+{% endblock %}
