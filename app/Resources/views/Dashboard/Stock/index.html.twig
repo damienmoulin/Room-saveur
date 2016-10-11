@@ -21,6 +21,10 @@
                 <td>{{ stock.room.postalCode }}</td>
                 <td>{{ stock.amount }}</td>
                 <td>{{ stock.createdAt|date('d/m/Y h:i:s') }}</td>
+                <td>
+                    <a href="{{ path('appbundle_dashboard_stock_edit', { 'id' : stock.id}) }}">Editer</a>
+                    <a href="{{ path('appbundle_dashboard_stock_remove', { 'id' : stock.id}) }}">Supprimer</a>
+                </td>
             </tr>
         {% endfor %}
         </tbody>
