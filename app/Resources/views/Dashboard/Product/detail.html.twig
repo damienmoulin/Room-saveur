@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <ul>
+        <li><img src="{{ asset('upload/pictures/'~product.filename) }}" alt="picture"></li>
+        <li>ID : {{ product.id }}</li>
+        <li>Designation : {{ product.designation }}</li>
+        <li>Descriptif : {{ product.descriptive }}</li>
+        <li>Prix : {{ product.price }}</li>
+        <li>TVA : {{ product.tva }}</li>
+        <li>Reference : {{ product.reference }}</li>
+    </ul>
+{% endblock %}
+{% block javascripts %}
+{% endblock %}
+{% block stylesheets %}
+
+{% endblock %}
