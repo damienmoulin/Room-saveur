@@ -21,6 +21,19 @@ class ProductController extends Controller
 {
 
     /**
+     * @param Product $product
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/detail/{id}", name="appbundle_dashboard_product_detail")
+     */
+    public function detailProductAction(Product $product)
+    {
+        return $this->render('Dashboard/Product/detail.html.twig',
+            [
+                'product' => $product
+            ]);
+    }
+
+    /**
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("", name="appbundle_dashboard_product")
      */

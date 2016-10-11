@@ -9,6 +9,8 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+
 
 /**
  * @ORM\Entity
@@ -46,6 +48,13 @@ class Room
      * @ORM\Column(name="address_complement", type="string", length=255, nullable=true)
      */
     private $addressComplement;
+
+    /**
+     * @var ArrayCollection $stocks
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Stock", mappedBy="product", cascade={"all"})
+     */
+    private $stocks;
 
     /**
      * Get id
@@ -151,5 +160,47 @@ class Room
     public function getAddressComplement()
     {
         return $this->addressComplement;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->stocks = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add stock
+     *
+     * @param \AppBundle\Entity\Stock $stock
+     *
+     * @return Room
+     */
+    public function addStock(\AppBundle\Entity\Stock $stock)
+    {
+        $stock->setRoom($this);
+        $this->stocks->add($stock);
+
+        return $this;
+    }
+
+    /**
+     * Remove stock
+     *
+     * @param \AppBundle\Entity\Stock $stock
+     */
+    public function removeStock(\AppBundle\Entity\Stock $stock)
+    {
+        $this->stocks->removeElement($stock);
+    }
+
+    /**
+     * Get stocks
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getStocks()
+    {
+        return $this->stocks;
     }
 }

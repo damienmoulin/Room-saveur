@@ -21,7 +21,10 @@
                     <td>{{ room.city }}</td>
                     <td>{{ room.postalCode }}</td>
                     <td>{{ room.addressComplement }}</td>
-                    <td><a href="{{ path('appbundle_dashboard_room_remove', {'id': room.id }) }}">Supprimer</a></td>
+                    <td>
+                        <a href="{{ path('appbundle_dashboard_room_edit', {'id': room.id }) }}">Editer</a>
+                        <a href="{{ path('appbundle_dashboard_room_remove', {'id': room.id }) }}">Supprimer</a>
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>
