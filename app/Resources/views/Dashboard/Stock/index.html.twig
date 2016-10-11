@@ -17,7 +17,7 @@
         {% for stock in stocks %}
             <tr>
                 <td>{{ stock.id }}</td>
-                <td>{{ stock.product.descriptive }}</td>
+                <td><a href="{{ path('appbundle_dashboard_product_detail', { 'id' : stock.product.id}) }}">{{ stock.product.descriptive }}</a></td>
                 <td>{{ stock.room.postalCode }}</td>
                 <td>{{ stock.amount }}</td>
                 <td>{{ stock.createdAt|date('d/m/Y h:i:s') }}</td>
