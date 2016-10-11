@@ -1,0 +1,49 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: damien
+ * Date: 11/10/16
+ * Time: 14:32
+ */
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="room")
+ */
+class Room
+{
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+    /**
+     * @var $address
+     * @ORM\Column(name="address", type="string", length=255, nullable=false)
+     */
+    private $address;
+
+    /**
+     * @var $address
+     * @ORM\Column(name="city", type="string", length=255, nullable=false)
+     */
+    private $city;
+
+    /**
+     * @var $address
+     * @ORM\Column(name="postal_code", type="string", length=5, nullable=false)
+     */
+    private $postalCode;
+
+    /**
+     * @var $address
+     * @ORM\Column(name="address_complement", type="string", length=255, nullable=true)
+     */
+    private $addressComplement;
+}

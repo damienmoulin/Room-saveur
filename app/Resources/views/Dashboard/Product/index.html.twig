@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <table>
+        <thead>
+        <tr>
+            <td>Id</td>
+            <td>Picture</td>
+            <td>Reference</td>
+            <td>Designation</td>
+            <td>Descriptif</td>
+            <td>Price</td>
+            <td>TVA</td>
+            <td><a href="{{ path('appbundle_dashboard_product_add') }}">Ajouter</a></td>
+        </tr>
+        </thead>
+        <tbody>
+        {% for product in products %}
+            <tr>
+                <td>{{ product.id }}</td>
+                <td><img src="{{ asset('upload/pictures/'~product.filename) }}" alt="picture"></td>
+                <td>{{ product.reference }}</td>
+                <td>{{ product.designation }}</td>
+                <td>{{ product.descriptive }}</td>
+                <td>{{ product.price }}</td>
+                <td>{{ product.tva }}</td>
+                <td><a href="{{ path('appbundle_dashboard_product_remove', {'id': product.id }) }}">Supprimer</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+{% block javascripts %}
+{% endblock %}
+{% block stylesheets %}
+    <style>
+        img {
+            width:50px;
+            height:50px;
+        }
+    </style>
+{% endblock %}
