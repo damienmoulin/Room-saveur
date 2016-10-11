@@ -1,0 +1,80 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: damien
+ * Date: 11/10/16
+ * Time: 15:22
+ */
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
+
+/**
+ * Music
+ *
+ * @ORM\Table(name="music")
+ * @ORM\Entity()
+ */
+class Product
+{
+    use TimestampableEntity;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var $reference
+     * @ORM\Column(name="reference", type="string", length=255, nullable=false)
+     */
+    private $reference;
+
+    /**
+     * @var $designation
+     * @ORM\Column(name="designation", type="string", length=255, nullable=false)
+     */
+    private $designation;
+
+    /**
+     * @var $descriptive
+     * @ORM\Column(name="descriptive", type="text", nullable=false)
+     */
+    private $descriptive;
+
+    /**
+     * @var $price
+     * @ORM\Column(name="price", type="float", nullable=false)
+     */
+    private $price;
+
+    /**
+     * @var $tva
+     * @ORM\Column(name="tva", type="float", nullable=false)
+     */
+    private $tva;
+
+    /**
+     * @ORM\Column(type="string")
+     *
+     * @Assert\NotBlank(message="Please, upload the image file")
+     * @Assert\File(
+     *     mimeTypes={ "image/jpeg" })
+     */
+    private $picture;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="filename", type="string", length=255, unique=true)
+     */
+    private $filename;
+
+}
