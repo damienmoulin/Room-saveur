@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <table>
+        <thead>
+        <tr>
+            <td>Id</td>
+            <td>Produit</td>
+            <td>Dêpot</td>
+            <td>Quantité</td>
+            <td>Date de fabrication</td>
+            <td><a href="{{ path('appbundle_dashboard_stock_add') }}">Ajouter</a></td>
+        </tr>
+        </thead>
+        <tbody>
+        {% for stock in stocks %}
+            <tr>
+                <td>{{ stock.id }}</td>
+                <td>{{ stock.product.descriptive }}</td>
+                <td>{{ stock.room.postalCode }}</td>
+                <td>{{ stock.amount }}</td>
+                <td>{{ stock.createdAt|date('d/m/Y h:i:s') }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+{% block javascripts %}
+{% endblock %}
+{% block stylesheets %}
+{% endblock %}

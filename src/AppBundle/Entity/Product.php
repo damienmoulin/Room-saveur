@@ -11,11 +11,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Music
  *
- * @ORM\Table(name="music")
+ * @ORM\Table(name="product")
  * @ORM\Entity()
  */
 class Product
@@ -77,6 +78,12 @@ class Product
      */
     private $filename;
 
+    /**
+     * @var ArrayCollection $stocks
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Stock", mappedBy="product", cascade={"all"})
+     */
+    private $stocks;
 
     /**
      * Get id
@@ -254,5 +261,48 @@ class Product
     public function getFilename()
     {
         return $this->filename;
+    }
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->stocks = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add stock
+     *
+     * @param \AppBundle\Entity\Stock $stock
+     *
+     * @return Product
+     */
+    public function addStock(\AppBundle\Entity\Stock $stock)
+    {
+        $stock->setProduct($this);
+        $this->stocks->add($stock);
+
+        return $this;
+    }
+
+    /**
+     * Remove stock
+     *
+     * @param \AppBundle\Entity\Stock $stock
+     */
+    public function removeStock(\AppBundle\Entity\Stock $stock)
+    {
+        $this->stocks->removeElement($stock);
+    }
+
+    /**
+     * Get stocks
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getStocks()
+    {
+        return $this->stocks;
     }
 }
