@@ -116,7 +116,7 @@ class OrderController extends Controller
     {
         $user = $this->get('security.token_storage')->getToken()->getUser();
 
-        if( $order->getAddress()->getUser() == $user) {
+        if( $order->getAddress()->getUser() == $user && $order->getStatus() == 0) {
             $order->setCreatedAt(new \DateTime());
             $order->setStatus(1);
 
