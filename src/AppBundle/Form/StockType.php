@@ -22,12 +22,6 @@ class StockType extends AbstractType
                     'class' => 'AppBundle\Entity\Product',
                     'choice_label' => 'designation'
                 ])
-            ->add('room', EntityType::class,
-                [
-                    'label' => 'Dêpot',
-                    'class' => 'AppBundle\Entity\Room',
-                    'choice_label' => 'postal_code'
-                ])
         ;
     }
     

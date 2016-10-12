@@ -98,6 +98,12 @@ class Product
     private $orderItems;
 
     /**
+     * @var $dlc
+     * @ORM\Column(name="dlc", type="integer", nullable=false)
+     */
+    private $dlc;
+
+    /**
      * Get id
      *
      * @return integer
@@ -388,5 +394,29 @@ class Product
     public function getOrderItems()
     {
         return $this->orderItems;
+    }
+
+    /**
+     * Set dlc
+     *
+     * @param integer $dlc
+     *
+     * @return Product
+     */
+    public function setDlc($dlc)
+    {
+        $this->dlc = $dlc;
+
+        return $this;
+    }
+
+    /**
+     * Get dlc
+     *
+     * @return integer
+     */
+    public function getDlc()
+    {
+        return $this->dlc;
     }
 }

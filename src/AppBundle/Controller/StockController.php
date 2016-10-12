@@ -8,6 +8,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Room;
 use AppBundle\Entity\Stock;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -18,7 +19,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class StockController extends Controller
 {
-
     /**
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("", name="appbundle_dashboard_stock")
@@ -37,12 +37,12 @@ class StockController extends Controller
     /**
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
-     * @Route("/add", name="appbundle_dashboard_stock_add")
+     * @Route("/add/{id}", name="appbundle_dashboard_stock_add")
      */
-    public function addStockAction(Request $request)
+    public function addStockAction(Request $request, Room $room)
     {
         $stock = new Stock();
-
+        $stock->setRoom($room);
         $form = $this->get('form.factory')->create('AppBundle\Form\StockType', $stock);
 
         $form->handleRequest($request);
