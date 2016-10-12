@@ -91,6 +91,13 @@ class Product
     private $likes;
 
     /**
+     * @var ArrayCollection $orderItems
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\OrderItem", mappedBy="product", cascade={"all"})
+     */
+    private $orderItems;
+
+    /**
      * Get id
      *
      * @return integer
@@ -275,6 +282,7 @@ class Product
     {
         $this->stocks = new \Doctrine\Common\Collections\ArrayCollection();
         $this->likes = new ArrayCollection();
+        $this->orderItems = new ArrayCollection();
     }
 
     /**
@@ -345,5 +353,40 @@ class Product
     public function getLikes()
     {
         return $this->likes;
+    }
+
+    /**
+     * Add orderItem
+     *
+     * @param \AppBundle\Entity\OrderItem $orderItem
+     *
+     * @return Product
+     */
+    public function addOrderItem(\AppBundle\Entity\OrderItem $orderItem)
+    {
+        $orderItem->setProduct($this);
+        $this->orderItems->add($orderItem);
+
+        return $this;
+    }
+
+    /**
+     * Remove orderItem
+     *
+     * @param \AppBundle\Entity\OrderItem $orderItem
+     */
+    public function removeOrderItem(\AppBundle\Entity\OrderItem $orderItem)
+    {
+        $this->orderItems->removeElement($orderItem);
+    }
+
+    /**
+     * Get orderItems
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getOrderItems()
+    {
+        return $this->orderItems;
     }
 }

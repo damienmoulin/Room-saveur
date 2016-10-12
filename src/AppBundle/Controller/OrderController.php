@@ -81,12 +81,49 @@ class OrderController extends Controller
      */
     public function completeOrderAction(Request $request, $key, Order $order)
     {
-        if ($key == $order->getLink()) {
-            dump($order);
+        if ($key == $order->getLink() && !$order->getStatus()) {
+
+            $form = $this->get('form.factory')->create('AppBundle\Form\OrderType', $order);
+
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($order);
+
+                $em->flush();
+
+                return $this->redirect($this->generateUrl('appbundle_order_complete', ['key' => $order->getLink(), 'id' => $order->getId()]));
+
+            }
+
             return $this->render('FrontOffice/Order/complete.html.twig',
                 [
-
+                    'form' => $form->createView()
                 ]);
+        }
+        else {
+            return $this->redirect($this->generateUrl('appbundle_order'));
+        }
+    }
+
+    /**
+     * @param Order $order
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @Route("/validate/{id}", name="appbundle_order_valiadate")
+     */
+    public function validateOrderAction(Order $order)
+    {
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+
+        if( $order->getAddress()->getUser() == $user) {
+            $order->setCreatedAt(new \DateTime());
+            $order->setStatus(1);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($order);
+
+            $em->flush();
         }
         else {
             return $this->redirect($this->generateUrl('appbundle_order'));
