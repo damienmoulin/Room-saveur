@@ -137,30 +137,39 @@ class OrderController extends Controller
             $distance = 1000000;
 
             foreach ($rooms as $room) {
-                $addressRoom = $room->getAddress().' '.$room->getPostalCode().' '.$room->getCity();
 
-                $addressRoomValid = str_replace(' ', '+', $addressRoom);
+                foreach ($room->getStocks() as $stock) {
+                    foreach ($order->getOrderItems() as $item) {
+                        if ($stock->getProduct() == $item->getProduct() && $stock->getAmount() >= $item->getAmount()) {
+                            $addressRoom = $room->getAddress().' '.$room->getPostalCode().' '.$room->getCity();
 
-                $ch = curl_init();
-                curl_setopt($ch, CURLOPT_URL, 'https://maps.googleapis.com/maps/api/distancematrix/json?origins='.$addressStringValid.'&destinations='.$addressRoomValid.'&mode=driving&language=fr-FR&key=AIzaSyAenAYLqGhP-jEWqha-oD_gGzFJbaCHUHM');
-                curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: application/json')); // Assuming you're requesting JSON
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                            $addressRoomValid = str_replace(' ', '+', $addressRoom);
 
-                $response = curl_exec($ch);
+                            $ch = curl_init();
+                            curl_setopt($ch, CURLOPT_URL, 'https://maps.googleapis.com/maps/api/distancematrix/json?origins='.$addressStringValid.'&destinations='.$addressRoomValid.'&mode=driving&language=fr-FR&key=AIzaSyAenAYLqGhP-jEWqha-oD_gGzFJbaCHUHM');
+                            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: application/json')); // Assuming you're requesting JSON
+                            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
-                $data = json_decode($response);
-                if ($data->rows[0]->elements[0]->distance->value < $distance) {
-                    $distance = $data->rows[0]->elements[0]->distance->value;
-                    $bestRoom = $room;
+                            $response = curl_exec($ch);
+
+                            $data = json_decode($response);
+                            if (isset($data) && $data->rows[0]->elements[0]->distance->value < $distance) {
+                                $distance = $data->rows[0]->elements[0]->distance->value;
+                                $bestRoom = $room;
+                            }
+                        }
+                    }
                 }
 
-                dump($data->rows[0]->elements[0]->distance->value);
             }
-
-            dump($bestRoom);
-            $order->setRoom($bestRoom);
-            return new Response();
-            //$em->flush();
+            if (!isset($bestRoom)) {
+                return false;
+            }
+            else {
+                $order->setRoom($bestRoom);
+                $em->flush();
+                return new Response();
+            }
         }
         else {
             return $this->redirect($this->generateUrl('appbundle_order'));
