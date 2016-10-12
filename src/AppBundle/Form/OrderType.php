@@ -2,12 +2,13 @@
 
 namespace AppBundle\Form;
 
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
-class StockType extends AbstractType
+
+class OrderType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -15,13 +16,14 @@ class StockType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('amount')
-            ->add('product', EntityType::class,
+            ->add('orderItems', CollectionType::class ,
                 [
-                    'label' => 'Produit',
-                    'class' => 'AppBundle\Entity\Product',
-                    'choice_label' => 'designation'
+                    'entry_type'   => OrderItemType::class ,
+                    'allow_add'    => true,
+                    'allow_delete' => true,
+                    'by_reference' => false
                 ])
+
         ;
     }
     
@@ -31,7 +33,7 @@ class StockType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Stock'
+            'data_class' => 'AppBundle\Entity\Order'
         ));
     }
 
@@ -40,7 +42,7 @@ class StockType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'appbundle_stock';
+        return 'appbundle_order';
     }
 
 

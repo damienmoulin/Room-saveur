@@ -20,6 +20,7 @@ class ProductType extends AbstractType
             ->add('descriptive')
             ->add('price')
             ->add('tva')
+            ->add('dlc')
             ->add('picture', FileType::class)
         ;
     }

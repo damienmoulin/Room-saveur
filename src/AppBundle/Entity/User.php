@@ -83,6 +83,16 @@ class User extends BaseUser
     }
 
     /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
      * Set firstname
      *
      * @param string $firstname

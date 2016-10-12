@@ -52,9 +52,16 @@ class Room
     /**
      * @var ArrayCollection $stocks
      *
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Stock", mappedBy="product", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Stock", mappedBy="room", cascade={"all"})
      */
     private $stocks;
+
+    /**
+     * @var ArrayCollection $orders
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Order", mappedBy="room", cascade={"all"})
+     */
+    private $orders;
 
     /**
      * Get id
@@ -160,5 +167,47 @@ class Room
     public function getAddressComplement()
     {
         return $this->addressComplement;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->stocks = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add stock
+     *
+     * @param \AppBundle\Entity\Stock $stock
+     *
+     * @return Room
+     */
+    public function addStock(\AppBundle\Entity\Stock $stock)
+    {
+        $stock->setRoom($this);
+        $this->stocks->add($stock);
+
+        return $this;
+    }
+
+    /**
+     * Remove stock
+     *
+     * @param \AppBundle\Entity\Stock $stock
+     */
+    public function removeStock(\AppBundle\Entity\Stock $stock)
+    {
+        $this->stocks->removeElement($stock);
+    }
+
+    /**
+     * Get stocks
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getStocks()
+    {
+        return $this->stocks;
     }
 }

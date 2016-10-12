@@ -35,3 +35,4 @@ security:
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/dashboard/, role: ROLE_ADMIN }
+        - { path: ^/order/complete/, role: IS_AUTHENTICATED_ANONYMOUSLY}
