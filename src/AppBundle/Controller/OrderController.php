@@ -123,7 +123,44 @@ class OrderController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($order);
 
-            $em->flush();
+            $address = $order->getAddress();
+            $addressString = $address->getAddress(). ' '.$address->getCity();
+            $addressStringValid = str_replace(' ', '+', $addressString);
+
+            $rooms  = $this->getDoctrine()->getRepository('AppBundle:Room')
+                ->findBy(
+                    [
+
+                    ]
+                );
+
+            $distance = 1000000;
+
+            foreach ($rooms as $room) {
+                $addressRoom = $room->getAddress().' '.$room->getPostalCode().' '.$room->getCity();
+
+                $addressRoomValid = str_replace(' ', '+', $addressRoom);
+
+                $ch = curl_init();
+                curl_setopt($ch, CURLOPT_URL, 'https://maps.googleapis.com/maps/api/distancematrix/json?origins='.$addressStringValid.'&destinations='.$addressRoomValid.'&mode=driving&language=fr-FR&key=AIzaSyAenAYLqGhP-jEWqha-oD_gGzFJbaCHUHM');
+                curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: application/json')); // Assuming you're requesting JSON
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+                $response = curl_exec($ch);
+
+                $data = json_decode($response);
+                if ($data->rows[0]->elements[0]->distance->value < $distance) {
+                    $distance = $data->rows[0]->elements[0]->distance->value;
+                    $bestRoom = $room;
+                }
+
+                dump($data->rows[0]->elements[0]->distance->value);
+            }
+
+            dump($bestRoom);
+            $order->setRoom($bestRoom);
+            return new Response();
+            //$em->flush();
         }
         else {
             return $this->redirect($this->generateUrl('appbundle_order'));
