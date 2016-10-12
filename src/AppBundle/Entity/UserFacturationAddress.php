@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: damien
- * Date: 11/10/16
- * Time: 19:37
+ * Date: 12/10/16
+ * Time: 09:09
  */
 
 namespace AppBundle\Entity;
@@ -12,9 +12,9 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="user_address")
+ * @ORM\Table(name="user_facturation_address")
  */
-class UserAddress
+class UserFacturationAddress
 {
     /**
      * @ORM\Id
@@ -70,7 +70,7 @@ class UserAddress
      *
      * @param string $address
      *
-     * @return UserAddress
+     * @return UserFacturationAddress
      */
     public function setAddress($address)
     {
@@ -94,7 +94,7 @@ class UserAddress
      *
      * @param string $city
      *
-     * @return UserAddress
+     * @return UserFacturationAddress
      */
     public function setCity($city)
     {
@@ -118,7 +118,7 @@ class UserAddress
      *
      * @param string $postalCode
      *
-     * @return UserAddress
+     * @return UserFacturationAddress
      */
     public function setPostalCode($postalCode)
     {
@@ -142,7 +142,7 @@ class UserAddress
      *
      * @param string $addressComplement
      *
-     * @return UserAddress
+     * @return UserFacturationAddress
      */
     public function setAddressComplement($addressComplement)
     {
@@ -166,7 +166,7 @@ class UserAddress
      *
      * @param \AppBundle\Entity\User $user
      *
-     * @return UserAddress
+     * @return UserFacturationAddress
      */
     public function setUser(\AppBundle\Entity\User $user = null)
     {

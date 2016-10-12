@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-
+    <h1>Addresses</h1>
     <table>
         <thead>
         <tr>
@@ -24,6 +24,35 @@
                 <td>
                     <a href="{{ path('appbundle_dashboard_useraddress_edit', {'id': addresse.id }) }}">Editer</a>
                     <a href="{{ path('appbundle_dashboard_useraddress_remove', {'id': addresse.id }) }}">Supprimer</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <h1>Addresses de facturation</h1>
+    <table>
+        <thead>
+        <tr>
+            <td>Id</td>
+            <td>Adresse</td>
+            <td>Ville</td>
+            <td>Code postal</td>
+            <td>Complement d'adresse</td>
+            <td><a href="{{ path('appbundle_dashboard_useraddress_add') }}">Ajouter</a></td>
+        </tr>
+        </thead>
+        <tbody>
+        {% for address in addressFacturations %}
+            <tr>
+                <td>{{ address.id }}</td>
+                <td>{{ address.address }}</td>
+                <td>{{ address.city }}</td>
+                <td>{{ address.postalCode }}</td>
+                <td>{{ address.addressComplement }}</td>
+                <td>
+                    <a href="{{ path('appbundle_dashboard_useraddress_edit_facturation', {'id': address.id }) }}">Editer</a>
+                    <a href="{{ path('appbundle_dashboard_useraddress_remove', {'id': address.id }) }}">Supprimer</a>
                 </td>
             </tr>
         {% endfor %}
