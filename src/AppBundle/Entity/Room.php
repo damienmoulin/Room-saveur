@@ -57,6 +57,13 @@ class Room
     private $stocks;
 
     /**
+     * @var ArrayCollection $orders
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Order", mappedBy="room", cascade={"all"})
+     */
+    private $orders;
+
+    /**
      * Get id
      *
      * @return integer
@@ -167,6 +174,7 @@ class Room
     public function __construct()
     {
         $this->stocks = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->orders = new ArrayCollection();
     }
 
     /**
@@ -202,5 +210,40 @@ class Room
     public function getStocks()
     {
         return $this->stocks;
+    }
+
+    /**
+     * Add order
+     *
+     * @param \AppBundle\Entity\Order $order
+     *
+     * @return Room
+     */
+    public function addOrder(\AppBundle\Entity\Order $order)
+    {
+        $order->setRoom($this);
+        $this->orders->add($order);
+
+        return $this;
+    }
+
+    /**
+     * Remove order
+     *
+     * @param \AppBundle\Entity\Order $order
+     */
+    public function removeOrder(\AppBundle\Entity\Order $order)
+    {
+        $this->orders->removeElement($order);
+    }
+
+    /**
+     * Get orders
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getOrders()
+    {
+        return $this->orders;
     }
 }

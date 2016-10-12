@@ -9,6 +9,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity
@@ -56,9 +57,11 @@ class UserAddress
     private $user;
 
     /**
-     * @var $isFacturation
+     * @var ArrayCollection $orders
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Order", mappedBy="address", cascade={"all"})
      */
-    private $isFacturation;
+    private $orders;
 
     /**
      * Get id

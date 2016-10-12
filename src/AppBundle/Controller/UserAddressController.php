@@ -29,6 +29,9 @@ class UserAddressController extends Controller
     {
         $address = new UserAddress();
 
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $address->setUser($user);
+
         $form = $this->get('form.factory')->create('AppBundle\Form\UserAddressType', $address);
 
         $form->handleRequest($request);
@@ -55,6 +58,9 @@ class UserAddressController extends Controller
     public function addFacturationAddress(Request $request)
     {
         $addressFacturation = new UserFacturationAddress();
+
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $addressFacturation->setUser($user);
 
         $form = $this->get('form.factory')->create('AppBundle\Form\UserFacturationAddressType', $addressFacturation);
 
@@ -132,11 +138,21 @@ class UserAddressController extends Controller
      */
     public function listAddressAction()
     {
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+
         $address = $this->getDoctrine()->getRepository('AppBundle:UserAddress')
-            ->findAll();
+            ->findBy(
+                [
+                    'user' => $user
+                ]
+            );
 
         $addressFacturation = $this->getDoctrine()->getRepository('AppBundle:UserFacturationAddress')
-            ->findAll();
+            ->findBy(
+                [
+                    'user' => $user
+                ]
+            );
 
         return $this->render('FrontOffice/UserAddress/index.html.twig',
             [
