@@ -62,6 +62,13 @@ class User extends BaseUser
     private $userAddress;
 
     /**
+     * @var ArrayCollection $userFacturationAddress
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\UserFacturationAddress", mappedBy="user", cascade={"all"})
+     */
+    private $userFacturationAddress;
+
+    /**
      * @var ArrayCollection $likes
      *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Like", mappedBy="user", cascade={"all"})
@@ -263,5 +270,40 @@ class User extends BaseUser
     public function getLikes()
     {
         return $this->likes;
+    }
+
+    /**
+     * Add userFacturationAddress
+     *
+     * @param \AppBundle\Entity\UserFacturationAddress $userFacturationAddress
+     *
+     * @return User
+     */
+    public function addUserFacturationAddress(\AppBundle\Entity\UserFacturationAddress $userFacturationAddress)
+    {
+        $userFacturationAddress->setUser($this);
+        $this->userFacturationAddress->add($userFacturationAddress);
+
+        return $this;
+    }
+
+    /**
+     * Remove userFacturationAddress
+     *
+     * @param \AppBundle\Entity\UserFacturationAddress $userFacturationAddress
+     */
+    public function removeUserFacturationAddress(\AppBundle\Entity\UserFacturationAddress $userFacturationAddress)
+    {
+        $this->userFacturationAddress->removeElement($userFacturationAddress);
+    }
+
+    /**
+     * Get userFacturationAddress
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUserFacturationAddress()
+    {
+        return $this->userFacturationAddress;
     }
 }

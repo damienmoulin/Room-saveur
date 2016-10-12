@@ -9,12 +9,14 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\UserAddress;
+use AppBundle\Entity\UserFacturationAddress;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 /**
- * @Route("/dashboard/user/address", name="appbundle_dashboard_useraddress")
+ * @Route("/user/address", name="appbundle_dashboard_useraddress")
  */
 class UserAddressController extends Controller
 {
@@ -39,7 +41,34 @@ class UserAddressController extends Controller
             return $this->redirect($this->generateUrl('appbundle_dashboard_useraddress'));
         }
 
-        return $this->render('Dashboard/UserAddress/add.html.twig',
+        return $this->render('FrontOffice/UserAddress/add.html.twig',
+            [
+                'form' => $form->createView()
+            ]);
+    }
+
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @Route("/add/facturation", name="appbundle_dashboard_useraddress_add_facturation")
+     */
+    public function addFacturationAddress(Request $request)
+    {
+        $addressFacturation = new UserFacturationAddress();
+
+        $form = $this->get('form.factory')->create('AppBundle\Form\UserFacturationAddressType', $addressFacturation);
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($addressFacturation);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('appbundle_dashboard_useraddress'));
+        }
+
+        return $this->render('FrontOffice/UserFacturationAddress/add.html.twig',
             [
                 'form' => $form->createView()
             ]);
@@ -65,12 +94,38 @@ class UserAddressController extends Controller
             return $this->redirect($this->generateUrl('appbundle_dashboard_useraddress'));
         }
 
-        return $this->render('Dashboard/UserAddress/add.html.twig',
+        return $this->render('FrontOffice/UserAddress/add.html.twig',
             [
                 'form' => $form->createView()
             ]);
     }
-    
+
+    /**
+     * @param Request $request
+     * @param UserFacturationAddress $addressFacturation
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @Route("/edit/facturation/{id}", name="appbundle_dashboard_useraddress_edit_facturation")
+     */
+    public function editAddressFacturationAction(Request $request, UserFacturationAddress $addressFacturation)
+    {
+        $form = $this->get('form.factory')->create('AppBundle\Form\UserFacturationAddressType', $addressFacturation);
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($addressFacturation);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('appbundle_dashboard_useraddress'));
+        }
+
+        return $this->render('FrontOffice/UserFacturationAddress/add.html.twig',
+            [
+                'form' => $form->createView()
+            ]);
+    }
+
     /**
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("", name="appbundle_dashboard_useraddress")
@@ -80,9 +135,13 @@ class UserAddressController extends Controller
         $address = $this->getDoctrine()->getRepository('AppBundle:UserAddress')
             ->findAll();
 
-        return $this->render('Dashboard/UserAddress/index.html.twig',
+        $addressFacturation = $this->getDoctrine()->getRepository('AppBundle:UserFacturationAddress')
+            ->findAll();
+
+        return $this->render('FrontOffice/UserAddress/index.html.twig',
             [
-                'address' => $address
+                'address' => $address,
+                'addressFacturations' => $addressFacturation
             ]);
     }
 
@@ -95,6 +154,21 @@ class UserAddressController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $em->remove($address);
+
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('appbundle_dashboard_useraddress'));
+    }
+
+    /**
+     * @param UserFacturationAddress $addressFacturation
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @Route("/remove/facturation/{id}", name="appbundle_dashboard_useraddress_remove")
+     */
+    public function removeAddressFacturationAction(UserFacturationAddress $addressFacturation)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($addressFacturation);
 
         $em->flush();
 
