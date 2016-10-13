@@ -1,34 +1,115 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    <div class="content">
+        <div class="main-container room-map">
 
-    <table>
-        <thead>
-            <tr>
-                <td>Id</td>
-                <td>Adresse</td>
-                <td>Ville</td>
-                <td>Code postal</td>
-                <td>Complement d'adresse</td>
-                <td><a href="{{ path('appbundle_dashboard_room_add') }}">Ajouter</a></td>
-            </tr>
-        </thead>
-        <tbody>
-            {% for room in rooms %}
-                <tr>
-                    <td>{{ room.id }}</td>
-                    <td>{{ room.address }}</td>
-                    <td>{{ room.city }}</td>
-                    <td>{{ room.postalCode }}</td>
-                    <td>{{ room.addressComplement }}</td>
-                    <td>
-                        <a href="{{ path('appbundle_dashboard_room_edit', {'id': room.id }) }}">Editer</a>
-                        <a href="{{ path('appbundle_dashboard_room_remove', {'id': room.id }) }}">Supprimer</a>
-                    </td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            <div class="title-page">
+                <p>Le catalogue</p>
+                <form class="navbar-form navbar-right">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Rechercher un produit">
+                    </div>
+                    <button type="submit" class="btn btn-default">
+                        <i class="zmdi zmdi-search"></i>
+                    </button>
+                </form>
+            </div>
+
+            <div class="content-white content-white-map">
+
+                <!--
+                      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2625.6338373039057!2d2.357341915479665!3d48.846122679286225!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e671fa0bdace89%3A0xbd7297ff622a14ac!2s23+Rue+Cuvier%2C+75005+Paris!5e0!3m2!1sfr!2sfr!4v1476286711895" frameborder="0" style="border:0" allowfullscreen></iframe>
+                -->
+
+                <div id="map" style="height: 400px">
+
+                </div>
+
+                <!-- rempli les addresse des rooms avec leur lat et long + nom pour le js -->
+                <span class="droom" data-name="Room Batignolles" data-lat="48.881936" data-lng="2.318906"></span>
+                <span class="droom" data-name="Room Batignolles 2" data-lat="48.880857" data-lng="2.310122"></span>
+
+                <div class="list-room">Liste des rooms parisiennes</div>
+
+                <a class="btn-add-product" type="button" data-toggle="modal" data-target="#myModal">Ajouter</a>
+
+
+
+                <div class="content-room">
+                    {% for room in rooms %}
+                        <div class="one-room">
+                            <div class="infos-room">
+                                <p>Room <strong>{{ room.name }}</strong></p>
+                                <span>{{ room.address }}</span>
+                                <span>{{ room.postalCode }}  {{ room.city }}</span>
+                            </div>
+                            <div class="btn-room">
+                                <a href="{{ path('appbundle_dashboard_room_remove', {'id': room.id }) }}" alt="SUPPRIMER">
+                                    <i class="zmdi zmdi-delete"></i>
+                                    SUPPRIMER
+                                </a>
+                                <!--
+                                <a href="{{ path('appbundle_dashboard_room_edit', {'id': room.id }) }}" alt="SUPPRIMER">
+                                    <i class="zmdi zmdi-edit"></i>
+                                    EDITER
+                                </a>
+                                -->
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Ajouter une room</h4>
+                </div>
+
+                <div class="modal-body modal-rooms">
+                        {{ form_start(form) }}
+                        <div class="form-group">
+                            <label>Nom de la room</label>
+                            {{ form_widget(form.name) }}
+                        </div>
+
+                        <div class="form-group">
+                            <label>Adresse</label>
+                            {{ form_widget(form.address) }}
+                        </div>
+
+                        <div class="form-group cdp">
+                            <label>Code Postal</label>
+                            {{ form_widget(form.postalCode) }}
+                        </div>
+
+                        <div class="form-group town">
+                            <label>Ville</label>
+                            {{ form_widget(form.city) }}
+                        </div>
+                        <div class="form-group">
+                            <label>Complement d'adresse</label>
+                            {{ form_widget(form.addressComplement) }}
+                        </div>
+                        <div class="line"></div>
+
+                        <div class="modal-footer">
+                            <button type="submit" class="add-modale">Ajouter</button>
+                        </div>
+                        {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
 {% endblock %}
 {% block javascripts %}
 {% endblock %}
