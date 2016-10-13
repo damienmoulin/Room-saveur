@@ -1,46 +1,141 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    {% include('Dashboard/Include/menu.html.twig') %}
+    {% include('Dashboard/Include/header.html.twig') %}
+    <div class="content">
+        <div class="main-container">
 
-    <table>
-        <thead>
-        <tr>
-            <td>Id</td>
-            <td>Picture</td>
-            <td>Reference</td>
-            <td>Designation</td>
-            <td>Descriptif</td>
-            <td>Price</td>
-            <td>TVA</td>
-            <td><a href="{{ path('appbundle_dashboard_product_add') }}">Ajouter</a></td>
-        </tr>
-        </thead>
-        <tbody>
-        {% for product in products %}
-            <tr>
-                <td>{{ product.id }}</td>
-                <td><img src="{{ asset('upload/pictures/'~product.filename) }}" alt="picture"></td>
-                <td>{{ product.reference }}</td>
-                <td>{{ product.designation }}</td>
-                <td>{{ product.descriptive }}</td>
-                <td>{{ product.price }}</td>
-                <td>{{ product.tva }}</td>
-                <td>
-                    <a href="{{ path('appbundle_dashboard_product_detail',{'id': product.id } ) }}">Voir</a>
-                    <a href="{{ path('appbundle_dashboard_product_remove', {'id': product.id }) }}">Supprimer</a>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            <div class="title-page">
+                <p>Le catalogue</p>
+                <form class="navbar-form navbar-right">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Rechercher un produit">
+                    </div>
+                    <button type="submit" class="btn btn-default">
+                        <i class="zmdi zmdi-search"></i>
+                    </button>
+                </form>
+            </div>
+
+            <div class="content-white">
+
+                <a class="btn-add-product" type="button" data-toggle="modal" data-target="#myModal">Ajouter</a>
+                {% for product in products %}
+                    <div class="first-content-menu content-menu ">
+
+                        <div class="type-menu">
+                            <img src="{{ asset('upload/pictures/'~product.filename) }}" alt="fruit">
+                            <p>{{ product.designation }}</p>
+                            <ul>
+                                <li>{{ product.reference }}</li>
+                                <li>J+{{ product.dlc }} après fabrication</li>
+                            </ul>
+                        </div>
+
+                        <div class="infos-menu">
+                            <p>{{ product.designation }}</p>
+                            <div class="description">
+                                {{ product.descriptive }}
+                            </div>
+                        </div>
+
+                        <div class="price">
+                            <p>{{ product.price }} €</p>
+                            <span>{{ product.tva }}% TVA</span>
+                        </div>
+
+                        <div class="btn-edit">
+                            <a href="{{ path('appbundle_dashboard_product_remove', {'id': product.id }) }}" alt="SUPPRIMER">
+                                <i class="zmdi zmdi-delete"></i>
+                                SUPPRIMER
+                            </a>
+
+                            <!--
+                            <a href="#" alt="EDITER">
+                                <i class="zmdi zmdi-edit"></i>
+                                EDITER
+                            </a>
+                            -->
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Ajouter un produit</h4>
+                </div>
+
+                <div class="modal-body modal-rooms">
+                        {{ form_start(form) }}
+                        <div class="form-group">
+                            <label for="exampleInputFile">Photo</label>
+                            {{ form_widget(form.picture) }}
+                        </div>
+
+                        <div class="form-group">
+                            <label>Désignation</label>
+                            {{ form_widget(form.designation) }}
+                        </div>
+
+                        <div class="form-group">
+                            <label>Descriptif</label>
+                            {{ form_widget(form.descriptive) }}
+                        </div>
+
+                        <div class="form-group cdp">
+                            <label>Référence</label>
+                            {{ form_widget(form.reference) }}
+                        </div>
+
+                        <div class="form-group town">
+                            <label>tarif unitaire HT</label>
+                            {{ form_widget(form.price) }}
+                        </div>
+
+                        <div class="line"></div>
+
+                        <div class="form-group">
+                            <label>Taux TVA </label>
+                            {{ form_widget(form.tva) }}
+                        </div>
+
+                        <div class="form-group">
+                            <label>Date limite de consommation</label>
+                            {{ form_widget(form.dlc) }}
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="submit" class="add-modale">Ajouter</button>
+                        </div>
+                        {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
 {% endblock %}
 {% block javascripts %}
+    <script>
+        $('.tab-menu').attr('class', 'tab-menu');
+        $('#product').attr('class', 'tab-menu active');
+    </script>
 {% endblock %}
 {% block stylesheets %}
     <style>
-        img {
-            width:50px;
-            height:50px;
+        .type-menu img{
+            width:291px;
+            height:146px;
+        }
+        .type-menu p {
+            width:291px;
         }
     </style>
 {% endblock %}

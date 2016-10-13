@@ -1,0 +1,97 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% include('Dashboard/Include/menu.html.twig') %}
+    {% include('Dashboard/Include/header.html.twig') %}
+    <div class="content">
+        <div class="main-container stat">
+
+            <div class="title-page">
+                <p>Statistiques</p>
+            </div>
+
+            <div class="content-white c-hidden">
+                <h2><i class="fa fa-bar-chart"></i> Chiffres d'affaires</h2>
+
+                <div class="c-btn">
+                    <a class="btn1 btn-suivant" href="#">Précédent</a>
+                    <a class="btn1 btn-now" href="#">Actuel</a>
+                </div>
+
+                <div class=" ">
+                    <div class="ct-chart ct-perfect-fourth"></div>
+                </div>
+                <div class="clear"></div>
+            </div>
+
+
+            <div class="bottom">
+                <div class="container-large">
+                    <div class="small">
+                        <div class="m-donut rooms">
+                            <p><i class="zmdi zmdi-truck"></i> Livreurs du jour</p>
+                            <div class="c-donut">
+                                <div class="chart">
+                                    <div class="percentage" data-percent="76">
+                                        <span class="number-donut">163</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="small">
+                        <div class="m-donut rooms">
+                            <p><i class="zmdi zmdi-store"></i> Rooms ouvertes</p>
+                            <div class="c-donut">
+                                <div class="chart">
+                                    <div class="percentage" data-percent="67">
+                                        <span class="number-donut">67</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="small">
+                        <div class="m-donut stock">
+                            <div class="image-background">
+                                <img src="{{ asset('assets/img/skin/pink-background.png') }}" alt="fruit">
+                            </div>
+                            <div class="content-background">
+                                <i class="zmdi zmdi-eye"></i>
+                                <p>Stock octobre</p>
+                                <div class="tray">
+                                    <p>1024</p>
+                                    <span>PLATEAUX</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="small">
+                        <div class="m-donut rooms">
+                            <p><i class="fa fa-bar-chart"></i> Objectif atteint</p>
+                            <div class="c-donut">
+                                <div class="chart">
+                                    <div class="percentage" data-percent="60">
+                                        <span class="number-donut">60%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+{% block javascripts %}
+    <script>
+        $('.tab-menu').attr('class', 'tab-menu');
+        $('#statistique').attr('class', 'tab-menu active');
+    </script>
+{% endblock %}
+{% block stylesheets %}
+{% endblock %}

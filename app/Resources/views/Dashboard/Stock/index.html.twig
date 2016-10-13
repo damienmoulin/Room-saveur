@@ -1,35 +1,107 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+{% include('Dashboard/Include/menu.html.twig') %}
+{% include('Dashboard/Include/header.html.twig') %}
+<div class="content">
+    <div class="main-container">
+        <div class="title-page">
+            <p>Le stock</p>
+        </div>
 
-    <table>
-        <thead>
-        <tr>
-            <td>Id</td>
-            <td>Produit</td>
-            <td>Dêpot</td>
-            <td>Quantité</td>
-            <td>Date de fabrication</td>
-        </tr>
-        </thead>
-        <tbody>
-        {% for stock in stocks %}
-            <tr>
-                <td>{{ stock.id }}</td>
-                <td><a href="{{ path('appbundle_dashboard_product_detail', { 'id' : stock.product.id}) }}">{{ stock.product.descriptive }}</a></td>
-                <td><a href="{{ path('appbundle_dashboard_room_detail', {'id' : stock.room.id}) }}">{{ stock.room.postalCode }}</a></td>
-                <td>{{ stock.amount }}</td>
-                <td>{{ stock.createdAt|date('d/m/Y h:i:s') }}</td>
-                <td>
-                    <a href="{{ path('appbundle_dashboard_stock_edit', { 'id' : stock.id}) }}">Editer</a>
-                    <a href="{{ path('appbundle_dashboard_stock_remove', { 'id' : stock.id}) }}">Supprimer</a>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+        <div class="content-white content-stocks">
+            <a style="margin-bottom:20px;" class="btn btn-default" type="button" data-toggle="modal" data-target="#myModal">Ajouter</a>
+            <div class="panel-group panel-group-dark" id="accordion2">
+                {% for room in rooms %}
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" class="collapsed" data-parent="#accordion2" href="#collapse{{ room.id }}2">
+                                    {{ room.name }} ({{ room.address }} - {{ room.postalCode }} {{ room.city }} ) {{ room.stocks|length }} elements
+                                </a>
+                            </h4>
+                        </div>
+                        <div style="height: 0px;" id="collapse{{ room.id }}2" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <table class="table table-responsive">
+                                    <thead>
+                                        <tr>
+                                            <td>Produit</td>
+                                            <td>Quantité</td>
+                                            <td>Date de fabrication</td>
+                                            <td>DLC</td>
+                                            <td>Action</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for stock in room.stocks %}
+                                            <tr>
+                                                <td>{{ stock.product.designation }}</td>
+                                                <td>{{ stock.amount }}</td>
+                                                <td>{{ stock.createdAt|date('d/m/y') }}</td>
+                                                <td>{{ stock.product.dlc }}</td>
+                                                <td><a href="{{ path('appbundle_dashboard_stock_remove', {'id': stock.id}) }}"><i class="fa fa-trash" aria-hidden="true"></i>
+                                                    </a></td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Ajouter une room</h4>
+                </div>
+
+                <div class="modal-body modal-rooms">
+                    {{ form_start(form) }}
+                        <div class="form-group">
+                            <label>Nom produit</label>
+                            {{ form_widget(form.product) }}
+                        </div>
+
+                        <div class="form-group">
+                            <label>Quantité</label>
+                            {{ form_widget(form.amount) }}
+                        </div>
+
+                        <div class="form-group">
+                            <label>Room</label>
+                            {{ form_widget(form.room) }}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="add-modale">Ajouter</button>
+                        </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
 {% block javascripts %}
+    <script>
+        $('.tab-menu').attr('class', 'tab-menu');
+        $('#stock').attr('class', 'tab-menu active');
+    </script>
 {% endblock %}
 {% block stylesheets %}
+    <style>
+        .content {
+            padding-bottom:200px;
+        }
+        .btn-add-product{
+            padding-bottom: 40px;
+        }
+    </style>
 {% endblock %}

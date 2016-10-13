@@ -32,17 +32,21 @@ class RoomController extends Controller
     }
 
     /**
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("", name="appbundle_dashboard_room")
      */
-    public function listRoomAction()
+    public function listRoomAction(Request $request)
     {
+        $form = $this->addRoomAction($request);
+
         $rooms = $this->getDoctrine()->getRepository('AppBundle:Room')
             ->findAll();
 
         return $this->render('Dashboard/Room/index.html.twig',
             [
-                'rooms' => $rooms
+                'rooms' => $rooms,
+                'form' => $form->createView()
             ]);
     }
 
@@ -64,13 +68,14 @@ class RoomController extends Controller
             $em->persist($room);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('appbundle_dashboard_room'));
+            unset($room);
+            unset($form);
+
+            $room = new Room();
+            $form = $this->get('form.factory')->create('AppBundle\Form\RoomType', $room);
         }
 
-        return $this->render('Dashboard/Room/add.html.twig',
-            [
-                'form' => $form->createView()
-            ]);
+        return $form;
 
     }
 

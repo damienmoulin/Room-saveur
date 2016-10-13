@@ -2,6 +2,7 @@
 
 namespace AppBundle\Form;
 
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -15,12 +16,33 @@ class StockType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('amount')
+            ->add('amount', IntegerType::class,
+                [
+                    'attr' =>
+                        [
+                            'class' => 'form-control',
+                            'placeholder' => 'Quantitée'
+                        ]
+                ])
+            ->add('room', EntityType::class,
+                [
+                    'label' => 'Room',
+                    'class' => 'AppBundle\Entity\Room',
+                    'choice_label' => 'name',
+                    'attr' =>
+                        [
+                            'class' => 'form-control'
+                        ]
+                ])
             ->add('product', EntityType::class,
                 [
                     'label' => 'Produit',
                     'class' => 'AppBundle\Entity\Product',
-                    'choice_label' => 'designation'
+                    'choice_label' => 'designation',
+                    'attr' =>
+                        [
+                            'class' => 'form-control'
+                        ]
                 ])
         ;
     }

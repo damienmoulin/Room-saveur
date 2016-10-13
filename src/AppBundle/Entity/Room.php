@@ -26,6 +26,12 @@ class Room
     protected $id;
 
     /**
+     * @var $name
+     * @ORM\Column(name="name", type="string", length=255, nullable=false)
+     */
+    private $name;
+
+    /**
      * @var $address
      * @ORM\Column(name="address", type="string", length=255, nullable=false)
      */
@@ -245,5 +251,29 @@ class Room
     public function getOrders()
     {
         return $this->orders;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     *
+     * @return Room
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 }

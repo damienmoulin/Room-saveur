@@ -1,0 +1,206 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% include('Dashboard/Include/menu.html.twig') %}
+    {% include('Dashboard/Include/header.html.twig') %}
+    <div class="content">
+
+        <div class="main-container">
+            <div class="">
+                <div class="board">
+                    Mon tableau de bord
+                </div>
+            </div>
+
+            <div class="first-section">
+                <div class="container-l">
+
+                    <div class="half">
+                        <div class="section-date">
+                            <div class="image-background">
+                                <img src="{{ asset('assets/img/skin/background.png') }}" alt="fruit">
+                            </div>
+                            <div class="content-background">
+                                <div class="number">14</div>
+                                <div class="infos-sup">
+                                    <div class="day">VENDREDI</div>
+                                    <div class="month">OCTOBRE</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="half two-col">
+                        <div class="m-donut rooms half-x">
+                            <p><i class="zmdi zmdi-store"></i> Rooms ouvertes</p>
+                            <div class="c-donut">
+                                <div class="chart">
+                                    <div class="percentage" data-percent="75">
+                                        <span class="number-donut">75</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!--
+                        --><div class="stock half-x">
+                            <div class="image-background">
+                                <img src="{{ asset('assets/img/skin/pink-background.png') }}" alt="fruit">
+                            </div>
+                            <div class="content-background">
+                                <i class="zmdi zmdi-eye"></i>
+                                <p>Stock octobre</p>
+                                <div class="tray">
+                                    <p>1024</p>
+                                    <span>PLATEAUX</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div><!--
+                -->
+                <div class="container-r">
+                    <div class="order">
+                        <i class="zmdi zmdi-format-list-bulleted"></i>
+                        <p>Les commandes du jour</p>
+                        <div class="bs-example" data-example-id="simple-table">
+                            <table class="table">
+                                <tbody>
+                                <tr>
+                                    <th scope="row">#87</th>
+                                    <td>
+                                        <div class="number-order">
+                                            <span>3</span> plateaux commandés
+                                        </div>
+                                    </td>
+                                    <td>11h48</td>
+                                    <td></td>
+                                </tr>
+
+                                <tr>
+                                    <th scope="row">#86</th>
+                                    <td>
+                                        <div class="number-order">
+                                            <span>8</span> plateaux commandés
+                                        </div>
+                                    </td>
+                                    <td>Thornton</td>
+                                    <td><i class="zmdi zmdi-check-circle"></i></td>
+                                </tr>
+
+                                <tr>
+                                    <th scope="row">#85</th>
+                                    <td>
+                                        <div class="number-order">
+                                            <span>8</span> plateaux commandés
+                                        </div>
+                                    </td>
+                                    <td>11h46</td>
+                                    <td></td>
+                                </tr>
+
+                                <tr>
+                                    <th scope="row">#84</th>
+                                    <td>
+                                        <div class="number-order">
+                                            <span>7</span> plateaux commandés
+                                        </div>
+                                    </td>
+                                    <td>11h32</td>
+                                    <td><i class="zmdi zmdi-check-circle"></i></td>
+                                </tr>
+
+                                <tr>
+                                    <th scope="row">#83</th>
+                                    <td>
+                                        <div class="number-order">
+                                            <span>8</span> plateaux commandés
+                                        </div>
+                                    </td>
+                                    <td>11h21</td>
+                                    <td><i class="zmdi zmdi-check-circle"></i></td>
+                                </tr>
+
+                                <tr>
+                                    <th scope="row">#82</th>
+                                    <td>
+                                        <div class="number-order">
+                                            <span>6</span> plateaux commandés
+                                        </div>
+                                    </td>
+                                    <td>11h19</td>
+                                    <td><i class="zmdi zmdi-check-circle"></i></td>
+                                </tr>
+                                </tbody>
+
+                            </table>
+                        </div>
+                        <a href="#" title="bouton afficher plus">AFFICHER PLUS</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="first-section container-large">
+                <div class="small">
+                    <div class="m-donut rooms">
+                        <p><i class="zmdi zmdi-truck"></i> Livreurs du jour</p>
+                        <div class="c-donut">
+                            <div class="chart">
+                                <div class="percentage" data-percent="25">
+                                    <span class="number-donut">25</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="big">
+                    <div class="plateau">
+                        <div class="image-background">
+                            <img src="{{ asset('assets/img/skin/push.png') }}" alt="fruit">
+                        </div>
+                        <div class="content-background">
+
+                            <div class="tray t1">
+                                <span>Plateau</span><br>
+                                <p>#1 <i class="zmdi zmdi-plus-circle"></i></p>
+                            </div>
+
+
+                            <div class="tray t2">
+                                <span>Plateau</span><br>
+                                <p>#2 <i class="zmdi zmdi-plus-circle"></i></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="small">
+                    <div class="m-donut rooms">
+                        <p><i class="fa fa-bar-chart"></i> Objectif atteint</p>
+                        <div class="c-donut">
+                            <div class="chart">
+                                <div class="percentage" data-percent="90">
+                                    <span class="number-donut">90%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ////// -->
+
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+{% block javascripts %}
+    <script>
+        $('.tab-menu').attr('class', 'tab-menu');
+        $('#dashboard').attr('class', 'tab-menu active');
+    </script>
+{% endblock %}
+{% block stylesheets %}
+{% endblock %}
