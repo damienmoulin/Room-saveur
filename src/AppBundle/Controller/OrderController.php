@@ -167,6 +167,17 @@ class OrderController extends Controller
             }
             else {
                 $order->setRoom($bestRoom);
+
+                foreach ( $order->getOrderItems() as $elms) {
+                    $stock = $this->getDoctrine()->getRepository('AppBundle:Stock')
+                        ->findOneBy(
+                            [
+                                'product' => $elms->getProduct()
+                            ]
+                        );
+                    $stock->setAmount($stock->getAmount() - $elms->getAmount());
+                }
+
                 $em->flush();
                 return new Response();
             }
