@@ -27,4 +27,13 @@ class DashboardController extends Controller
     {
         return $this->render('Dashboard/index.html.twig');
     }
+
+    /**
+     * @return Response
+     * @Route("/statistiques", name="appbundle_dashboard_statistique")
+     */
+    public function statistiqueAction()
+    {
+        return $this->render('Dashboard/statistique.html.twig');
+    }
 }

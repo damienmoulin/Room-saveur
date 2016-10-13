@@ -20,17 +20,20 @@ use Symfony\Component\HttpFoundation\Request;
 class StockController extends Controller
 {
     /**
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("", name="appbundle_dashboard_stock")
      */
-    public function listStockAction()
+    public function listStockAction(Request $request)
     {
-        $stocks = $this->getDoctrine()->getRepository('AppBundle:Stock')
+        $form = $this->addStockAction($request);
+        $stocks = $this->getDoctrine()->getRepository('AppBundle:Room')
             ->findAll();
 
         return $this->render('Dashboard/Stock/index.html.twig',
             [
-                'stocks' => $stocks
+                'rooms' => $stocks,
+                'form' => $form->createView()
             ]);
     }
 
@@ -39,10 +42,9 @@ class StockController extends Controller
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/add/{id}", name="appbundle_dashboard_stock_add")
      */
-    public function addStockAction(Request $request, Room $room)
+    public function addStockAction(Request $request)
     {
         $stock = new Stock();
-        $stock->setRoom($room);
         $form = $this->get('form.factory')->create('AppBundle\Form\StockType', $stock);
 
         $form->handleRequest($request);
@@ -57,13 +59,14 @@ class StockController extends Controller
 
             $em->flush();
 
-            return $this->redirect($this->generateUrl('appbundle_dashboard_stock'));
+            unset($form);
+            unset($stock);
+
+            $stock = new Stock();
+            $form = $this->get('form.factory')->create('AppBundle\Form\StockType', $stock);
         }
 
-        return $this->render('Dashboard/Stock/add.html.twig',
-            [
-                'form' => $form->createView()
-            ]);
+        return $form;
     }
 
     /**
