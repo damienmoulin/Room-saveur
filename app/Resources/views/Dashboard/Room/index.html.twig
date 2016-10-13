@@ -107,6 +107,9 @@
 {% endblock %}
 {% block javascripts %}
     <script>
+        $('.tab-menu').attr('class', 'tab-menu');
+        $('#room').attr('class', 'tab-menu active');
+
         {% for room in rooms %}
         var address = '{{ room.address }}';
         var city = '{{ room.city }}';
@@ -114,11 +117,11 @@
         $.get("https://maps.googleapis.com/maps/api/geocode/json?address="+address+","+city+",+CA&key=AIzaSyAenAYLqGhP-jEWqha-oD_gGzFJbaCHUHM").done(function(data) {
             var location = data.results[0].geometry.location;
 
-            var a = $('<span class="droom" data-name="Room Batignolles" data-lat="'+location.lat+'" data-lng="'+location.lng+'"></span>');
             $('.markers').append($('<span class="droom" data-name="Room Batignolles" data-lat="'+location.lat+'" data-lng="'+location.lng+'"></span>'));
         });
         {% endfor %}
     </script>
 {% endblock %}
 {% block stylesheets %}
+
 {% endblock %}

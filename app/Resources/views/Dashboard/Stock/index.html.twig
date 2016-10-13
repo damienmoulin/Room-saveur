@@ -10,6 +10,7 @@
         </div>
 
         <div class="content-white content-stocks">
+            <a style="margin-bottom:20px;" class="btn btn-default" type="button" data-toggle="modal" data-target="#myModal">Ajouter</a>
             <div class="panel-group panel-group-dark" id="accordion2">
                 {% for room in rooms %}
                     <div class="panel panel-default">
@@ -51,8 +52,6 @@
                 {% endfor %}
 
             </div>
-            <a class="btn-add-product" type="button" data-toggle="modal" data-target="#myModal">Ajouter</a>
-
         </div>
     </div>
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -91,9 +90,16 @@
 </div>
 {% endblock %}
 {% block javascripts %}
+    <script>
+        $('.tab-menu').attr('class', 'tab-menu');
+        $('#stock').attr('class', 'tab-menu active');
+    </script>
 {% endblock %}
 {% block stylesheets %}
     <style>
+        .content {
+            padding-bottom:200px;
+        }
         .btn-add-product{
             padding-bottom: 40px;
         }
