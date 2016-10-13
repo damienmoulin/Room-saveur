@@ -5,15 +5,7 @@
         <div class="main-container room-map">
 
             <div class="title-page">
-                <p>Le catalogue</p>
-                <form class="navbar-form navbar-right">
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Rechercher un produit">
-                    </div>
-                    <button type="submit" class="btn btn-default">
-                        <i class="zmdi zmdi-search"></i>
-                    </button>
-                </form>
+                <p>Les Rooms</p>
             </div>
 
             <div class="content-white content-white-map">
@@ -27,9 +19,9 @@
                 </div>
 
                 <!-- rempli les addresse des rooms avec leur lat et long + nom pour le js -->
-                <span class="droom" data-name="Room Batignolles" data-lat="48.881936" data-lng="2.318906"></span>
-                <span class="droom" data-name="Room Batignolles 2" data-lat="48.880857" data-lng="2.310122"></span>
 
+                <div class="markers">
+                </div>
                 <div class="list-room">Liste des rooms parisiennes</div>
 
                 <a class="btn-add-product" type="button" data-toggle="modal" data-target="#myModal">Ajouter</a>
@@ -112,6 +104,19 @@
 
 {% endblock %}
 {% block javascripts %}
+    <script>
+        {% for room in rooms %}
+        var address = '{{ room.address }}';
+        var city = '{{ room.city }}';
+
+        $.get("https://maps.googleapis.com/maps/api/geocode/json?address="+address+","+city+",+CA&key=AIzaSyAenAYLqGhP-jEWqha-oD_gGzFJbaCHUHM").done(function(data) {
+            var location = data.results[0].geometry.location;
+
+            var a = $('<span class="droom" data-name="Room Batignolles" data-lat="'+location.lat+'" data-lng="'+location.lng+'"></span>');
+            $('.markers').append($('<span class="droom" data-name="Room Batignolles" data-lat="'+location.lat+'" data-lng="'+location.lng+'"></span>'));
+        });
+        {% endfor %}
+    </script>
 {% endblock %}
 {% block stylesheets %}
 {% endblock %}
