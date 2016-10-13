@@ -1,27 +1,18 @@
 RoomSaveur
 ==========
 
-A Symfony project created on October 11, 2016, 1:01 pm.
-=======
+## REQUIRE
 
-## Pages
-- Liste des produits
-- Ajouter un produit
-- Détail d'un produit
-
-- Liste des Room
-- Ajouter une room
-- Détail d'une room
-   
-- Liste des Stocks
-- Ajouter du stock
-
-- Ajouter une adresse
-- Liste des adresses
-
+git
+php5
+composer
+php5-curl
 
 ## HOW TO INSTALL
+ 
+composer install  
+php bin/console doctrine:database:create  
+php bin/console doctrine:schema:update --force  
 
-
-php bin/console doctrine:database:create
-composer install
+## CREATE SUPER ADMIN USER
+php bin/console fos:user:create admin --super-admin
