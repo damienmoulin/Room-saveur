@@ -54,7 +54,8 @@ class RoomType extends AbstractType
                         [
                             'class' => 'form-control',
                             'placeholder' => 'Complement d\'addresse'
-                        ]
+                        ],
+                    'required' => false
                 ])
         ;
     }
