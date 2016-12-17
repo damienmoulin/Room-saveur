@@ -44,7 +44,7 @@
                                     SUPPRIMER
                                 </a>
                                 <!--
-                                <a href="{{ path('appbundle_dashboard_room_edit', {'id': room.id }) }}" alt="SUPPRIMER">
+                                <a href="{{ path('appbundle_dashboard_room_edit', {'id': room.id }) }}" alt="EDITER">
                                     <i class="zmdi zmdi-edit"></i>
                                     EDITER
                                 </a>
@@ -113,11 +113,13 @@
         {% for room in rooms %}
         var address = '{{ room.address }}';
         var city = '{{ room.city }}';
+        var postalcode = '{{ room.postalCode }}';
 
-        $.get("https://maps.googleapis.com/maps/api/geocode/json?address="+address+","+city+",+CA&key=AIzaSyAenAYLqGhP-jEWqha-oD_gGzFJbaCHUHM").done(function(data) {
+        $.get("https://maps.googleapis.com/maps/api/geocode/json?address="+address+","+city+"+FRANCE,&key=AIzaSyAenAYLqGhP-jEWqha-oD_gGzFJbaCHUHM").done(function(data) {
+
             var location = data.results[0].geometry.location;
-
             $('.markers').append($('<span class="droom" data-name="Room Batignolles" data-lat="'+location.lat+'" data-lng="'+location.lng+'"></span>'));
+            console.log($('.markers'));
         });
         {% endfor %}
     </script>
